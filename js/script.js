@@ -1,43 +1,53 @@
-var y = 500;
-// document.body.appendChild(duck);
-console.log(duck);
+var y = 1000;
+var score = 0;
+var teemoDeath = new Audio('sound/teemodeath.mp3');
+var teemoPop = new Audio('sound/teemopop.mp3');
+var teemoSurvive = new Audio('sound/teemosurvive.mp3');
 
-duck.style.background = "red";
-duck.style.position = "absolute";
-duck.style.width = "20px";
-duck.style.height = "20px";
-duck.style.top = y + "px";
-duck.style.left = x + "px";
-duck.style.transition = "1s";
-duck.style.rotate = "null";
 
-// while (y > 0) {
-setInterval(move, 1000);
 for (var i = 0; i < 6; i++) {
-    var duck = document.createElement("div");
-    var x = parseInt(Math.random()*1200);
-    document.body.appendChild(duck);
+  var container = document.createElement("div");
+  document.body.appendChild(container);
+  var duck = document.createElement("img");
+  duck.src = "img/teemo.png";
+  var x = parseInt(Math.random() * 1200);
+  duck.className = "target";
+  var duckArray = document.getElementsByClassName("target");
+  container.appendChild(duck);
+  teemoPop.play();
+
+  duck.style.position = "absolute";
+  duck.style.width = "100px";
+  duck.style.height = "100px";
+  duck.style.top = y + "px";
+  duck.style.left = x + "px";
+  duck.style.transition = "3s";
+  duck.style.rotate = "null";
 
 }
+
+setInterval(move, 1200);
+
+
 function move() {
-    duck.style.top = y + "px";
-    y -= 20;
-    duck.style.left = x + "px";
+  for (var i = 0; i < duckArray.length; i++) {
+    movingDuck = duckArray[i];
+    movingDuck.style.top = y + "px";
+    y -= 40;
+    movingDuck.style.left = x + "px";
     newX = parseInt(Math.random() * 1200);
     console.log(newX);
     x = newX;
-    // if (x < newX) {
-    //     for (var i = x; i < newX; i++) {
-    //         x += 20;
-    //     }
-    // } else {
-    //     for (var i = x; x > newX; i++) {
-    //         x -= 20;
-    //     }
-    // }
-    if (y < -20) {
-        duck.remove();
+    movingDuck.addEventListener('click', function(){
+      this.remove();
+      teemoDeath.play();
+    })
+    if (y < -100) {
+      movingDuck.remove();
+      teemoSurvive.play();
+
     }
-    // newY = Math.round(Math.random())*0;
+
+
+  }
 }
-// }
